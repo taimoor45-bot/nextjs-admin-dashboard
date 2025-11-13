@@ -5,11 +5,12 @@ import React, { useState } from "react";
 import InputGroup from "../FormElements/InputGroup";
 import { Checkbox } from "../FormElements/checkbox";
 import { supabase } from "../../../supabase/supabase-admin";
+import { Router } from "next/router";
 
 export default function SigninWithPassword() {
   const [data, setData] = useState({
-    email: process.env.NEXT_PUBLIC_DEMO_USER_MAIL || "",
-    password: process.env.NEXT_PUBLIC_DEMO_USER_PASS || "",
+    email: "",
+    password: "",
     remember: false,
   });
 
@@ -42,6 +43,8 @@ export default function SigninWithPassword() {
     }
 
     setLoading(false);
+
+    Router
     
   };
 
