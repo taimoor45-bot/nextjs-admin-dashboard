@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import InputGroup from "../FormElements/InputGroup";
 import { Checkbox } from "../FormElements/checkbox";
 import { supabase } from "../../../supabase/supabase-admin";
-import { Router } from "next/router";
+import { useRouter } from "next/navigation"; 
 
 export default function SigninWithPassword() {
   const [data, setData] = useState({
@@ -13,6 +13,8 @@ export default function SigninWithPassword() {
     password: "",
     remember: false,
   });
+
+  const router = useRouter();
 
   const [loading, setLoading] = useState(false);
 
@@ -40,11 +42,12 @@ export default function SigninWithPassword() {
       console.error("Login error:", error.message);
     } else {
       console.log("Logged in user:", signInData.user);
+
+      router.push("/")
+      
     }
 
     setLoading(false);
-
-    Router
     
   };
 

@@ -3,16 +3,22 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Image from "next/image";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CameraIcon } from "./_components/icons";
 import { SocialAccounts } from "./_components/social-accounts";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Page() {
   const [data, setData] = useState({
-    name: "Danish Heilium",
-    profilePhoto: "/images/user/user-03.png",
+    name: "",
+    email:"",
+    profilePhoto: "/images/quote-a-day/BBQ.png",
     coverPhoto: "/images/cover/cover-01.png",
   });
+
+  const {user, loading} = useAuth();
+
+  console.log("Users data",user)
 
   const handleChange = (e: any) => {
     if (e.target.name === "profilePhoto" ) {
@@ -36,6 +42,18 @@ export default function Page() {
       });
     }
   };
+
+  useEffect(() => {
+    if(user){
+      setData({
+        name: user.id ,
+        email: user.email,
+        profilePhoto: "/images/quote-a-day/BBQ.png" ,
+        coverPhoto: "/images/cover/cover-01.png",
+      })
+    }
+  }, [user])
+  
 
   return (
     <div className="mx-auto w-full max-w-[970px]">
@@ -110,7 +128,7 @@ export default function Page() {
             <h3 className="mb-1 text-heading-6 font-bold text-dark dark:text-white">
               {data?.name}
             </h3>
-            <p className="font-medium">Ui/Ux Designer</p>
+            <p className="font-medium">{data?.email}</p>
             <div className="mx-auto mb-5.5 mt-5 grid max-w-[370px] grid-cols-3 rounded-[5px] border border-stroke py-[9px] shadow-1 dark:border-dark-3 dark:bg-dark-2 dark:shadow-card">
               <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-dark-3 xsm:flex-row">
                 <span className="font-medium text-dark dark:text-white">

@@ -4,6 +4,8 @@ import { TopChannelsSkeleton } from "@/components/Tables/top-channels/skeleton";
 import { TopProducts } from "@/components/Tables/top-products";
 import { TopProductsSkeleton } from "@/components/Tables/top-products/skeleton";
 import InvoiceTable from "@/components/Tables/invoice-table";
+import userTable from "@/components/Tables/userTable";
+import { UsersSkeleton } from "@/components/Tables/userTable/skeleton";
 
 import { Metadata } from "next";
 import { Suspense } from "react";
@@ -27,6 +29,7 @@ const TablesPage = () => {
         </Suspense> */}
 
         <InvoiceTable />
+
       </div>
     </>
   );
