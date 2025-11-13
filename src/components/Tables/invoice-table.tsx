@@ -1,3 +1,5 @@
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -10,78 +12,82 @@ import { cn } from "@/lib/utils";
 import dayjs from "dayjs";
 import { CrossIcon, MarkIcon } from "./icons";
 import { getQuotes } from "@/services/getQuoteService";
+import { updateQuoteStatus } from "@/services/UpdateServices";
 
-export default async function InvoiceTable() {
-  const { quotes } = await getQuotes();
+export default function InvoiceTable() {
+  const [quotes, setQuotes] = useState<any[]>([]);
+
+  const fetchData = async () => {
+    const { quotes } = await getQuotes();
+    setQuotes(quotes);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleApprove = async (id: string) => {
+    const updated = await updateQuoteStatus(id, true);
+    if (updated) {
+      setQuotes((prev) =>
+        prev.map((data) =>
+          data.id === id ? { ...data, is_approved: true } : data,
+        ),
+      );
+    }
+  };
+
+  const handleReject = async (id: string) => {
+    const updated = await updateQuoteStatus(id, false);
+    if (updated) {
+      setQuotes((prev) =>
+        prev.map((data) =>
+          data.id === id ? { ...data, is_approved: false } : data,
+        ),
+      );
+    }
+  };
 
   return (
-    <div className="rounded-[10px] border border-stroke bg-white p-4 shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card sm:p-7.5">
+    <div className="rounded-[10px] border bg-white p-4 shadow-1 sm:p-7.5">
       <Table>
         <TableHeader>
-          <TableRow className="border-none bg-[#F7F9FC] dark:bg-dark-2 [&>th]:py-4 [&>th]:text-base [&>th]:text-dark [&>th]:dark:text-white">
-            <TableHead className="min-w-[155px] xl:pl-7.5">ID</TableHead>
-            <TableHead>Quotation ID</TableHead>
+          <TableRow>
+            <TableHead>ID</TableHead>
             <TableHead>Quote</TableHead>
             <TableHead>Author Name</TableHead>
             <TableHead>Created Date</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead className="text-right xl:pr-7.5">Actions</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
           {quotes.map((item) => (
-            <TableRow
-              key={item.id}
-              className="border-[#eee] dark:border-dark-3"
-            >
-              <TableCell className="min-w-[155px] xl:pl-7.5">
-                <h5 className="text-dark dark:text-white">{item.user?.name}</h5>
-                <p className="mt-[3px] text-body-sm font-medium">{item.uuid}</p>
-              </TableCell>
+            <TableRow key={item.id}>
+              <TableCell>{item.uuid}</TableCell>
+              <TableCell>{item.quote}</TableCell>
+              <TableCell>{item.auther_name}</TableCell>
               <TableCell>
-                <p className="text-dark dark:text-white">{item.id}</p>
+                {dayjs(item.created_at).format("MMM DD, YYYY")}
               </TableCell>
-
-              <TableCell>
-                <p className="text-dark dark:text-white">{item.quote}</p>
-              </TableCell>
-
-              <TableCell>
-                <p className="text-dark dark:text-white">{item.auther_name}</p>
-              </TableCell>
-
-              <TableCell>
-                <p className="text-dark dark:text-white">
-                  {dayjs(item.created_at).format("MMM DD, YYYY")}
-                </p>
-              </TableCell>
-
               <TableCell>
                 <div
-                  className={cn(
-                    "max-w-fit rounded-full px-3.5 py-1 text-sm font-medium",
-                    {
-                      "bg-[#219653]/[0.08] text-[#219653]":
-                        item.is_approved === true,
-                      "bg-[#D34053]/[0.08] text-[#D34053]":
-                        item.is_approved === false,
-                    },
-                  )}
+                  className={cn("rounded-full px-3 py-1 text-sm font-medium", {
+                    "bg-green-100 text-green-600": item.is_approved === true,
+                    "bg-red-100 text-red-600": item.is_approved === false,
+                  })}
                 >
-                  {item.is_approved ? "Approved" : "Pending"}
+                  {item.is_approved ? "True" : "False"}
                 </div>
               </TableCell>
 
-              <TableCell className="xl:pr-7.5">
-                <div className="flex items-center justify-end gap-x-3.5">
-                  <button className="hover:text-primary">
-                    <span className="sr-only">Mark Invoice</span>
+              <TableCell>
+                <div className="flex gap-2">
+                  <button onClick={() => handleApprove(item.id)}>
                     <MarkIcon />
                   </button>
-
-                  <button className="hover:text-primary">
-                    <span className="sr-only">Delete Invoice</span>
+                  <button onClick={() => handleReject(item.id)}>
                     <CrossIcon />
                   </button>
                 </div>
