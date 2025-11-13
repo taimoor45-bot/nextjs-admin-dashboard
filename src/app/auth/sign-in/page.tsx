@@ -24,20 +24,39 @@ export default function SignIn() {
           <div className="hidden w-full p-7.5 xl:block xl:w-1/2">
             <div className="custom-gradient-1 overflow-hidden rounded-2xl px-12.5 pt-12.5 dark:!bg-dark-2 dark:bg-none">
               <Link className="mb-10 inline-block" href="/">
+              <div className="flex items-center justify-center">
                 <Image
-                  className="hidden dark:block"
-                  src={"/images/logo/logo.svg"}
+                  className="dark:block  hidden"
+                  src={"/images/quote-a-day/Q.png"}
+                  alt="Logo"
+                  width={100}
+                  height={16}
+                />
+                <Image
+                  className="hidden dark:block mt-15"
+                  src={"/images/quote-a-day/WQ.png"}
                   alt="Logo"
                   width={176}
                   height={32}
                 />
+
+                </div>
+                <div className="flex items-center justify-center">
                 <Image
                   className="dark:hidden"
-                  src={"/images/logo/logo-dark.svg"}
+                  src={"/images/quote-a-day/BBQ.png"}
                   alt="Logo"
-                  width={176}
-                  height={32}
+                  width={100}
+                  height={16}
                 />
+                <Image
+                  className="dark:hidden mt-15"
+                  src={"/images/quote-a-day/BQ.png"}
+                  alt="Logo"
+                  width={150}
+                  height={30}
+                />
+                </div>
               </Link>
               <p className="mb-3 text-xl font-medium text-dark dark:text-white">
                 Sign in to your account

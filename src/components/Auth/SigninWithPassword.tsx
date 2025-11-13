@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import InputGroup from "../FormElements/InputGroup";
 import { Checkbox } from "../FormElements/checkbox";
+import { supabase } from "../../../supabase/supabase-admin";
 
 export default function SigninWithPassword() {
   const [data, setData] = useState({
@@ -21,15 +22,27 @@ export default function SigninWithPassword() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // You can remove this code block
     setLoading(true);
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    const {email, password} = data;
+
+    const {data: signInData, error} = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    if (error) {
+      console.error("Login error:", error.message);
+    } else {
+      console.log("Logged in user:", signInData.user);
+    }
+
+    setLoading(false);
+    
   };
 
   return (
