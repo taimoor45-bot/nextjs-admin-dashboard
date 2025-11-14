@@ -27,8 +27,13 @@ export default function InvoiceTable() {
   }, []);
 
   const handleApprove = async (id: string) => {
+    console.log("handle Approve");
+
     const updated = await updateQuoteStatus(id, true);
+
     if (updated) {
+      console.log("Working");
+
       setQuotes((prev) =>
         prev.map((data) =>
           data.id === id ? { ...data, is_approved: true } : data,
@@ -38,6 +43,7 @@ export default function InvoiceTable() {
   };
 
   const handleReject = async (id: string) => {
+    console.log("handle Reject");
     const updated = await updateQuoteStatus(id, false);
     if (updated) {
       setQuotes((prev) =>
@@ -73,10 +79,13 @@ export default function InvoiceTable() {
               </TableCell>
               <TableCell>
                 <div
-                  className={cn("rounded-full px-3 py-1 text-sm font-medium", {
-                    "bg-green-100 text-green-600": item.is_approved === true,
-                    "bg-red-100 text-red-600": item.is_approved === false,
-                  })}
+                  className={cn(
+                    "rounded-full px-3 py-1 text-center text-sm font-medium",
+                    {
+                      "bg-green-100 text-green-600": item.is_approved === true,
+                      "bg-red-100 text-red-600": item.is_approved === false,
+                    },
+                  )}
                 >
                   {item.is_approved ? "True" : "False"}
                 </div>
