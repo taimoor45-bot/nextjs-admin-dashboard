@@ -1,36 +1,51 @@
-// hooks/useAuth.tsx
 "use client";
 import { useState, useEffect } from "react";
 import { supabase } from "../../supabase/supabase-admin";
 
-type SupaUser = any; // replace with specific types if desired
-
 export function useAuth() {
-  const [user, setUser] = useState<SupaUser | null>(null);
+  const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let mounted = true;
+    let active = true;
 
-    // initial user fetch
-    (async () => {
-      const { data } = await supabase.auth.getUser();
-      if (!mounted) return;
-      setUser(data?.user ?? null);
+    async function loadUser() {
+      // 1️⃣ Get auth user
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!active) return;
+
+      setUser(user);
+
+      if (user) {
+        // 2️⃣ Fetch additional profile fields from "users" table
+        const { data: profileData } = await supabase
+          .from("users")
+          .select("*")
+          .eq("id", user.id)
+          .single();
+
+        setProfile(profileData);
+      }
+
       setLoading(false);
-    })();
+    }
 
-    // subscribe to changes
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!mounted) return;
-      setUser(session?.user ?? null);
+    loadUser();
+
+    // ⚡ Listen to auth changes
+    const { data: listener } = supabase.auth.onAuthStateChange(() => {
+      loadUser();
     });
 
     return () => {
-      mounted = false;
+      active = false;
       listener.subscription.unsubscribe();
     };
   }, []);
 
-  return { user, loading };
+  return { user, profile, loading };
 }

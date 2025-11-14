@@ -16,7 +16,7 @@ export default function Page() {
     coverPhoto: "/images/cover/cover-01.png",
   });
 
-  const {user, loading} = useAuth();
+  const {user, loading, profile} = useAuth();
 
   console.log("Users data",user)
 
