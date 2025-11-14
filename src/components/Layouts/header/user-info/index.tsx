@@ -19,9 +19,9 @@ export function UserInfo() {
   const {user} = useAuth();
 
   const USER = {
-    name: "John Smith",
-    email: "johnson@nextadmin.com",
-    img: "/images/user/user-03.png",
+    name: "Admin",
+    email: user?.email,
+    img: "/images/quote-a-day/BBQ.png",
   };
 
   return (

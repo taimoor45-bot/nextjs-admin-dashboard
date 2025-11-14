@@ -1,6 +1,6 @@
 import * as Icons from "../icons";
 
-export const NAV_DATA = [
+export const NAV_DATA =  [
   {
     label: "MAIN MENU",
     items: [
@@ -103,7 +103,7 @@ export const NAV_DATA = [
             url: "/auth/sign-in",
           },
         ],
-      },
+      }
     ],
   },
 ];
