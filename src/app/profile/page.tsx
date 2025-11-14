@@ -10,7 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 export default function Page() {
   const [data, setData] = useState({
-    name: "",
+    name: "Admin",
     email:"",
     profilePhoto: "/images/quote-a-day/BBQ.png",
     coverPhoto: "/images/cover/cover-01.png",
@@ -46,7 +46,7 @@ export default function Page() {
   useEffect(() => {
     if(user){
       setData({
-        name: user.id ,
+        name: "Admin" ,
         email: user.email,
         profilePhoto: "/images/quote-a-day/BBQ.png" ,
         coverPhoto: "/images/cover/cover-01.png",
@@ -129,7 +129,7 @@ export default function Page() {
               {data?.name}
             </h3>
             <p className="font-medium">{data?.email}</p>
-            <div className="mx-auto mb-5.5 mt-5 grid max-w-[370px] grid-cols-3 rounded-[5px] border border-stroke py-[9px] shadow-1 dark:border-dark-3 dark:bg-dark-2 dark:shadow-card">
+            {/* <div className="mx-auto mb-5.5 mt-5 grid max-w-[370px] grid-cols-3 rounded-[5px] border border-stroke py-[9px] shadow-1 dark:border-dark-3 dark:bg-dark-2 dark:shadow-card">
               <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-dark-3 xsm:flex-row">
                 <span className="font-medium text-dark dark:text-white">
                   259
@@ -148,18 +148,18 @@ export default function Page() {
                 </span>
                 <span className="text-body-sm-sm">Following</span>
               </div>
-            </div>
+            </div> */}
 
             <div className="mx-auto max-w-[720px]">
               <h4 className="font-medium text-dark dark:text-white">
                 About Me
               </h4>
               <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Pellentesque posuere fermentum urna, eu condimentum mauris
-                tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus
-                ultricies. Sed vel aliquet libero. Nunc a augue fermentum,
-                pharetra ligula sed, aliquam lacus.
+                In a world filled with endless photos, videos, and noise, Quote-a-Day offers a refreshing space dedicated entirely to words that inspire. Designed as a social platform similar to Facebook and Instagram, Quote-a-Day focuses only on sharing quotes — meaningful thoughts, life lessons, poetry lines, and daily motivation.
+
+Users can create profiles, post their own quotes, explore quotes from others, react, comment, and build a community around positivity and wisdom. Whether someone needs inspiration, wants to share their feelings, or simply enjoys thoughtful words, Quote-a-Day provides a simple, clean, and uplifting social experience.
+
+With a user-friendly interface and a growing quote-lover community, Quote-a-Day turns every day into an opportunity to spread knowledge, motivation, and creativity — one quote at a time.
               </p>
             </div>
 
