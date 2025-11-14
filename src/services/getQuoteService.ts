@@ -1,6 +1,9 @@
 import { supabase } from "../../supabase/supabase-admin";
 export async function getQuotes() {
-  const { data, error } = await supabase.from("quotes").select(`
+  const { data, error } = await supabase
+    .from("quotes")
+    .select(
+      `
         id,
         uuid,
         auther_name,
@@ -11,7 +14,9 @@ export async function getQuotes() {
         name,
         profile_picture
         )
-        `);
+        `,
+    )
+    .order("created_at", { ascending: false });
 
   if (error) {
     console.log(error.message);
