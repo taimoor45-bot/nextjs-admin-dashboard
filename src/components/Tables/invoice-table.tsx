@@ -17,7 +17,7 @@ import { updateQuoteStatus } from "@/services/UpdateServices";
 export default function InvoiceTable() {
   const [quotes, setQuotes] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10g;
+  const itemsPerPage = 10;
 
   const fetchData = async () => {
     const { quotes } = await getQuotes();
