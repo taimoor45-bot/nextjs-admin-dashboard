@@ -16,6 +16,8 @@ import { updateQuoteStatus } from "@/services/UpdateServices";
 
 export default function InvoiceTable() {
   const [quotes, setQuotes] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 15;
 
   const fetchData = async () => {
     const { quotes } = await getQuotes();
@@ -27,13 +29,8 @@ export default function InvoiceTable() {
   }, []);
 
   const handleApprove = async (id: string) => {
-    console.log("handle Approve");
-
     const updated = await updateQuoteStatus(id, true);
-
     if (updated) {
-      console.log("Working");
-
       setQuotes((prev) =>
         prev.map((data) =>
           data.id === id ? { ...data, is_approved: true } : data,
@@ -43,7 +40,6 @@ export default function InvoiceTable() {
   };
 
   const handleReject = async (id: string) => {
-    console.log("handle Reject");
     const updated = await updateQuoteStatus(id, false);
     if (updated) {
       setQuotes((prev) =>
@@ -53,6 +49,11 @@ export default function InvoiceTable() {
       );
     }
   };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = quotes.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(quotes.length / itemsPerPage);
 
   return (
     <div className="rounded-[10px] border bg-white p-4 shadow-1 sm:p-7.5">
@@ -69,7 +70,7 @@ export default function InvoiceTable() {
         </TableHeader>
 
         <TableBody>
-          {quotes.map((item) => (
+          {currentItems.map((item) => (
             <TableRow key={item.id}>
               <TableCell>{item.uuid}</TableCell>
               <TableCell>{item.quote}</TableCell>
@@ -105,6 +106,39 @@ export default function InvoiceTable() {
           ))}
         </TableBody>
       </Table>
+
+      {/* Pagination Controls */}
+      <div className="mt-4 flex justify-center gap-2">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          className="rounded border px-3 py-1 disabled:opacity-50"
+        >
+          Prev
+        </button>
+
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrentPage(i + 1)}
+            className={`rounded border px-3 py-1 ${
+              currentPage === i + 1 ? "bg-blue-500 text-white" : ""
+            }`}
+          >
+            {i + 1}
+          </button>
+        ))}
+
+        <button
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+          className="rounded border px-3 py-1 disabled:opacity-50"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }
