@@ -71,6 +71,7 @@ export function Sidebar() {
               className="px-0 py-2.5 min-[850px]:py-0"
             >
               <Logo />
+              
             </Link>
 
             {isMobile && (
