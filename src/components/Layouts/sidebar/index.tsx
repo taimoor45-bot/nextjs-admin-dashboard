@@ -71,7 +71,6 @@ export function Sidebar() {
               className="px-0 py-2.5 min-[850px]:py-0"
             >
               <Logo />
-              
             </Link>
 
             {isMobile && (
@@ -135,7 +134,20 @@ export function Sidebar() {
                                       href={subItem.url}
                                       isActive={pathname === subItem.url}
                                     >
-                                      <span>{subItem.title}</span>
+                                      <div className="flex gap-4">
+                                        <div className="">
+                                          {/* Left text */}
+                                          {subItem.itemsIcon && (
+                                            <subItem.itemsIcon
+                                              className="ml-auto size-5 shrink-0"
+                                              aria-hidden="true"
+                                            />
+                                          )}
+                                        </div>
+                                        <div className="">
+                                          <span>{subItem.title}</span>
+                                        </div>
+                                      </div>
                                     </MenuItem>
                                   </li>
                                 ))}

@@ -23,7 +23,6 @@ export default function InvoiceTable() {
     const { quotes } = await getQuotes();
     setQuotes(quotes);
   };
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -62,8 +61,10 @@ export default function InvoiceTable() {
           <TableRow>
             <TableHead>ID</TableHead>
             <TableHead>Quote</TableHead>
+            <TableHead>Like count</TableHead>
             <TableHead>Author Name</TableHead>
             <TableHead>Created Date</TableHead>
+
             <TableHead>Status</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
@@ -73,7 +74,9 @@ export default function InvoiceTable() {
           {currentItems.map((item) => (
             <TableRow key={item.id}>
               <TableCell>{item.uuid}</TableCell>
+
               <TableCell>{item.quote}</TableCell>
+              <TableCell>{item.likes_count}</TableCell>
               <TableCell>{item.auther_name}</TableCell>
               <TableCell>
                 {dayjs(item.created_at).format("MMM DD, YYYY")}

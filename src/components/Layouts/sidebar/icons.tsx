@@ -82,6 +82,42 @@ export function User(props: PropsType) {
     </svg>
   );
 }
+export function QuoteIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      {...props}
+    >
+      <path
+        d="M7 7h4v4H8.5C8.2 11 8 11.2 8 11.5V13H11v4H5v-4c0-2.2 1.8-4 4-4h.5V7zM17 7h4v4h-2.5c-.3 0-.5.2-.5.5V13h3v4h-6v-4c0-2.2 1.8-4 4-4h.5V7z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+export function UserOutlineIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      {...props}
+    >
+      <path
+        d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4 0-7 2.5-7 5v1h14v-1c0-2.5-3-5-7-5z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
 
 export function Alphabet(props: PropsType) {
   return (

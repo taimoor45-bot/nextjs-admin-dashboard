@@ -1,6 +1,31 @@
+import React, { SVGProps } from "react";
 import * as Icons from "../icons";
 
-export const NAV_DATA =  [
+type SubItem = {
+  title: string;
+  url: string;
+  itemsIcon?: (props: SVGProps<SVGSVGElement>) => React.JSX.Element;
+};
+
+type Item =
+  | {
+      title: string;
+      icon: (props: SVGProps<SVGSVGElement>) => React.JSX.Element;
+      items: SubItem[];
+    }
+  | {
+      title: string;
+      url: string;
+      icon: (props: SVGProps<SVGSVGElement>) => React.JSX.Element;
+      items: [];
+    };
+
+type Section = {
+  label: string;
+  items: Item[];
+};
+
+export const NAV_DATA: Section[] = [
   {
     label: "MAIN MENU",
     items: [
@@ -48,10 +73,12 @@ export const NAV_DATA =  [
           {
             title: "Quotes",
             url: "/quotes",
+            itemsIcon: Icons.QuoteIcon,
           },
           {
             title: "Users",
             url: "/users",
+            itemsIcon: Icons.UserOutlineIcon,
           },
         ],
       },
@@ -103,7 +130,7 @@ export const NAV_DATA =  [
             url: "/auth/sign-in",
           },
         ],
-      }
+      },
     ],
   },
 ];

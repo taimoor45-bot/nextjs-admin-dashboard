@@ -8,6 +8,7 @@ export async function getQuotes() {
         uuid,
         auther_name,
         quote,
+        likes_count,
         is_approved,
         created_at,
         user:users(
